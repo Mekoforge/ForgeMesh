@@ -19,11 +19,11 @@ ForgeMesh 采用六个逻辑层次。这些是**逻辑边界**，不要求一开
 
 | 层次     | 名称                       | 组成                                                                               | 职责                   |
 | ------ | ------------------------ | -------------------------------------------------------------------------------- | -------------------- |
-| **L1** | Access Layer             | REST API · CLI · Web Console · SDK                                               | 统一外部入口、身份认证与 API 兼容性 |
+| **L1** | Access Layer             | REST API · CLI · Web Console · SDK · Data Plane Gateway（Go）                     | 统一外部入口、身份认证与 API 兼容性；网关负责推理流量的路由与流式转发 |
 | **L2** | Core Control Plane（微内核）  | Resource Registry · Reconciliation · Policy · Scheduler · Plugin Manager · Audit | 权威状态、资源治理、权限与一致性     |
 | **L3** | Orchestration & Decision | WorkEngine API · Decision Router · JEV API · Workflow Providers                  | 可靠执行与结构化决策           |
 | **L4** | Plugin Capability Layer  | GPU · Runtime · Model · MIG · Quantization · QoS · Metering                      | 可替换的领域能力实现           |
-| **L5** | Execution Plane          | Node Agent · Kubernetes · Container Runtime · GPU · Inference Services           | 实际资源操作与状态反馈          |
+| **L5** | Execution Plane          | Node Agent · 进程与容器启动器 · Kubernetes 推理后端（Kthena / KServe）· GPU · Inference Services | 实际资源操作与状态反馈；Kubernetes 上的推理编排交给 Kthena / KServe（architecture.md 10.4） |
 | **L6** | Platform Infrastructure  | SQLite · Outbox/Event Bus · Object Storage · Secret Manager · Observability      | 持久化、消息、制品、密钥与监控      |
 
 ### 四条不可违背的架构不变量
